@@ -39,7 +39,8 @@ export default class EmailService {
       service: 'gmail',
       auth: {
         type: 'OAuth2',
-        user: 'johndoe@example.com',
+        user: configService.get('GOOGLE_USER'),
+        clientId: configService.get('GOOGLE_CLIENT_ID'),
         clientSecret: configService.get('GOOGLE_CLIENT_SECRET'),
         refreshToken: configService.get('REFRESH_TOKEN'),
         accessToken,
@@ -78,8 +79,8 @@ export default class EmailService {
 
         options.html = htmlWithStylesInlined;
         options.text = text;
-        options.from = 'John Doe <johndoe@example.com>';
-        options.replyTo = 'John Doe <johndoe@example.com>';
+        options.from = `John Doe <${this.configService.get('GOOGLE_USER')}>`;
+        options.replyTo = `John Doe <${this.configService.get('GOOGLE_USER')}>`;
 
         return this.sendMail(options);
       } catch (error) {

@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import SubscribersDto, { Subscriber } from './dto/subscribers.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -83,5 +84,18 @@ export default class SubscriberService {
 
   async deleteSubscriber(id: string) {
     return this.subscriberRepository.delete(id);
+  }
+
+  async getSubscribersByTag(tag: string) {
+    const subscribers = await this.subscriberRepository.find({
+      where: { tag, subscribed: true },
+    });
+
+    if (!subscribers.length)
+      throw new NotFoundException({
+        message: 'No subscribers found with the provided tag',
+      });
+
+    return subscribers;
   }
 }

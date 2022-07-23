@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import CampaignModule from './campaigns/__module';
 import EmailModule from './email/__module';
 import SubscriberModule from './subscribers/__module';
 import { AppController } from './__app.controller';
@@ -12,6 +13,7 @@ import { DatabaseModule } from './__db.module';
     SubscriberModule,
     DatabaseModule,
     EmailModule,
+    CampaignModule,
   ],
   controllers: [AppController],
   providers: [AppService],
